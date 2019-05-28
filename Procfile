@@ -1,1 +1,1 @@
-discordbot: python discordbot.py
+discordbot-yosei: python main.py
