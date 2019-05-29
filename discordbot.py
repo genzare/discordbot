@@ -1,6 +1,8 @@
 # discord.py の読み込み
 import discord
 import random
+import numpy as np
+from parse import *
 
 TOKEN = 'NTgyNDc1MTg3NDUxMzMwNTgw.XOuWoQ.6jV2cYi_0isAYj5AfhaTxv918L8'
 MEGAMI_LIST =["刀","扇","銃","薙","忍","書","傘","槌","毒","枢","騎","爪","鎌","旗","橇","鏡","古","琵","炎","笛","戦","絆","塵","拒","経","機"]
@@ -38,13 +40,39 @@ async def on_message(message):
             else:
                 m = f'{message.author.name}さんが後攻です。'
             await send_channel(m)
+    # ダイス一個ふる
+    def roll_dice(dice_size):
+        num = np.random.randint(1,int(dice_size))
+        return num
+    # ダイス結果をテキストで
+    def get_diceresult(dice_size,dice_num):
+        dice_val = np.array([],dtype=np.int64)
+        for i in range(dice_num):
+            dice_val =np.append(dice_val, roll_dice(dice_size))
+        ms = str(np.sum(dice_val)) + ' = ' + str(dice_val) 
+        return ms
     # ダイス
     if message.content == "/y dice":
         if client.user != message.author:
-            result = random.randint(1,6)
+#            result = random.randint(1,6)
+            result = roll_dice(6)
             m = f'{str(result)}の目が出ました。6面ダイスですよ'
             await send_channel(m)
-
+     #複数ダイス
+    elif message.content.startswith("/y dice"):
+        if client.user != message.author:
+            info = parse('/y dice {}d{}',message.content)
+            dice_num = int(info[0])
+            dice_size = int(info[1])
+            if dice_num >= 500:
+                m = "おいふざけるなよその個数"
+                await send_channel(m)
+            if (dice_num<500 and dice_num >= 100):
+                m = "そんなに何個も振れないです..."
+                await send_channel(m)
+            if dice_num <100:
+                m = get_diceresult(dice_size,dice_num)
+                await send_channel(m)
     #--- ふるよに機能 ---
     #メガミ選択
     if message.content.startswith("/y megami"):
