@@ -1,5 +1,4 @@
 discordbot.py
 discord
-random
 numpy
 parse
