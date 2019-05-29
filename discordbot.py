@@ -29,7 +29,7 @@ async def on_message(message):
         # 送り主がBotだった場合反応したくないので
         if client.user != message.author:
             # メッセージを書きます
-            m = f'おはよーございます{message.author.name}さん！'
+            m = f'おはよーございます！{message.author.name}さん！'
             # メッセージが送られてきたチャンネルへメッセージを送ります
             await send_channel(m)
     # 先行後攻ぎめ
@@ -54,7 +54,6 @@ async def on_message(message):
     # ダイス
     if message.content == "/y dice":
         if client.user != message.author:
-#            result = random.randint(1,6)
             result = roll_dice(6)
             m = f'{str(result)}の目が出ました。6面ダイスですよ'
             await send_channel(m)
@@ -78,14 +77,20 @@ async def on_message(message):
     if message.content.startswith("/y megami"):
         if client.user != message.author:
             if message.content == "/y megami":
-                m = f'{random.choice(MEGAMI_LIST)}とかどうでしょう'
+                megami_num = 1 
+            else:
+                info = parse('/y megami{}',message.content)
+                megami_num = int(info[0])
+            if megami_num <= len(MEGAMI_LIST):
+                megami_result = '.'.join(random.sample(MEGAMI_LIST,megami_num))
+                m= f'{megami_result}とかどうでしょう'
                 await send_channel(m)
 
     #リプ処理
     if client.user in message.mentions:
         #　ヘルプ
         if "help" in message.content:
-            ms = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n使い方: /y [command]\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\nこんな感じです'
+            ms = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice <number>d<number> <number>d<number>のダイスを振ります\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n\nこんな感じです'
             await send_channel(ms)
         else:
             reply  = f'{message.author.mention} はいはいー 使い方知りたければhelpでメンションくださーい'
