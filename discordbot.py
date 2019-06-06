@@ -6,6 +6,7 @@ from parse import *
 
 TOKEN = 'NTgyNDc1MTg3NDUxMzMwNTgw.XOuWoQ.6jV2cYi_0isAYj5AfhaTxv918L8'
 MEGAMI_LIST =["刀","扇","銃","薙","忍","書","傘","槌","毒","枢","騎","爪","鎌","旗","橇","鏡","古","琵","炎","笛","戦","絆","塵","拒","経","機"]
+FE0SYMBOL_LIST = ["光の剣","聖痕","暗夜","白夜","メダリオン","聖戦旗","神器","シンボルなし"]
 
 #接続に必要なオブジェクト生成
 client = discord.Client()
@@ -83,18 +84,30 @@ async def on_message(message):
                 megami_num = int(info[0])
             if megami_num <= len(MEGAMI_LIST):
                 megami_result = '.'.join(random.sample(MEGAMI_LIST,megami_num))
-                m= f'{megami_result}とかどうでしょう'
+                m = f'{megami_result}とかどうでしょう'
                 await send_channel(m)
+            else:
+                m = f'現在のメガミの総数は{len(MEGAMI_LIST)}柱です。更新不足ですか・・・？'
+                await send_channel(m)
+    #---サイファ機能----
+    #おすすめデッキ
+    if message.content == "/y fedeck":
+        if client.user != message.author:
+            deck_result = random.choice(FE0SYMBOL_LIST)
+            m = f'{deck_result}のカードが入ったデッキとかオススメです！'
+            await send_channel(m)
 
     #リプ処理
     if client.user in message.mentions:
         #　ヘルプ
         if "help" in message.content:
-            ms = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice <number>d<number> <number>d<number>のダイスを振ります\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n\nこんな感じです'
-            await send_channel(ms)
+            m = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice <number>d<number> <number>d<number>のダイスを振ります\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n~サイファ用~\n/y fedeck                 オススメデッキ\nこんな感じです'
+            await send_channel(m)
         else:
-            reply  = f'{message.author.mention} はいはいー 使い方知りたければhelpでメンションくださーい'
-            await send_channel(reply)
+            m = f'{message.author.mention} はいはいー 使い方知りたければhelpでメンションくださーい'
+            await send_channel(m)
+   
+        
 
 
 client.run(TOKEN)
