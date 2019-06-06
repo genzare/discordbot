@@ -94,7 +94,7 @@ async def on_message(message):
     if message.content == "/y fedeck":
         if client.user != message.author:
             deck_result = random.choice(FE0SYMBOL_LIST)
-            m = f'{deck_result}のカードが入ったデッキとかオススメです！'
+            m = f'{deck_result}のカードが入ったデッキとかオススメです！ '
             await send_channel(m)
 
     #リプ処理
