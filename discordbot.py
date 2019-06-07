@@ -84,7 +84,7 @@ async def on_message(message):
                 megami_num = int(info[0])
             if megami_num <= len(MEGAMI_LIST):
                 megami_result = '.'.join(random.sample(MEGAMI_LIST,megami_num))
-                m = f'{megami_result}とかどうでしょう'
+                m = f'{megami_result}とかどうでしょう!'
                 await send_channel(m)
             else:
                 m = f'現在のメガミの総数は{len(MEGAMI_LIST)}柱です。更新不足ですか・・・？'
