@@ -108,7 +108,7 @@ async def on_message(message):
             if(isVictory=="勝"):
                 wks.update_acell('B2', player_1)
                 wks.update_acell('C2', player_2)
-                m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しましたー'
+                m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しました'
             if(isVictory=="負"):
                 wks.update_acell('B2', info[1])
                 wks.update_acell('C2', player_1)
