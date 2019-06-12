@@ -25,7 +25,7 @@ credential = {
                 "client_x509_cert_url":  os.environ['SHEET_CLIENT_X509_CERT_URL']
              }
 
-TOKEN = os.environ.get("DISCORD_TOKEN")
+TOKEN = os.environ["DISCORD_TOKEN"]
 MEGAMI_LIST =["刀","扇","銃","薙","忍","書","傘","槌","毒","枢","騎","爪","鎌","旗","橇","鏡","古","琵","炎","笛","戦","絆","塵","拒","経","機"]
 FE0SYMBOL_LIST = ["光の剣","聖痕","暗夜","白夜","メダリオン","聖戦旗","神器","シンボルなし"]
 
