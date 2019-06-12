@@ -27,8 +27,7 @@ credential = {
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope)
 gc = gspread.authorize(credentials)
 wks = gc.open('fairyCircle').sheet1
-wks.update_acell('A1', '隠蔽工作です！')
-print(wks.acell('A1'))
+
 
 TOKEN = os.environ["DISCORD_TOKEN"]
 MEGAMI_LIST =["刀","扇","銃","薙","忍","書","傘","槌","毒","枢","騎","爪","鎌","旗","橇","鏡","古","琵","炎","笛","戦","絆","塵","拒","経","機"]
@@ -121,6 +120,8 @@ async def on_message(message):
         if client.user != message.author:
             deck_result = random.choice(FE0SYMBOL_LIST)
             m = f'{deck_result}のカードが入ったデッキとかオススメでーす！'
+            wks.update_acell('A1', '隠蔽工作です！')
+            print(wks.acell('A1'))
             await send_channel(m)
 
     #リプ処理
