@@ -98,6 +98,21 @@ async def on_message(message):
             if dice_num <100:
                 m = get_diceresult(dice_size,dice_num)
                 await send_channel(m)
+    #戦績β
+    if message.content.startswith("/y senseki"):
+        if client.user != message.author:
+            info = parse('/y senseki {}-{} {}'message.content)
+            player_1 = info[0]
+            player_2 = info[1]
+            isVictory = info[2]
+            if(isVictory=="勝"):
+                wks.update_acell('B2', player_1)
+                wks.update_acell('C2', player_2)
+                m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しましたー'
+            if(isVictory=="負"):
+                wks.update_acell('B2', info[1])
+                wks.update_acell('C2', player_1)
+                m = f'{player_2}さんが勝ち、{player_1}さんが負けで登録しましたー'
     #--- ふるよに機能 ---
     #メガミ選択
     if message.content.startswith("/y megami"):
