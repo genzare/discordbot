@@ -108,12 +108,12 @@ async def on_message(message):
             if(isVictory=="負"):
                 wks.update_acell('B2', info[1])
                 wks.update_acell('C2', player_1)
-                m = f'{player_2}さんが勝ち、{player_1}さんが負けで登録しましたー'
+                m = f'{player_2}さんが勝ち、{player_1}さんが負けで登録しましたよー'
                 await send_channel(m)
             else:
                 wks.update_acell('B2', player_1)
                 wks.update_acell('C2', player_2)
-                m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しました'
+                m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しましたね'
                 await send_channel(m)
     #--- ふるよに機能 ---
     #メガミ選択
@@ -137,7 +137,6 @@ async def on_message(message):
         if client.user != message.author:
             deck_result = random.choice(FE0SYMBOL_LIST)
             m = f'{deck_result}のカードが入ったデッキとかオススメでーす！'
-            wks.update_acell('A1', '隠蔽工作です！')
             print(wks.acell('A1'))
             await send_channel(m)
 
@@ -145,7 +144,7 @@ async def on_message(message):
     if client.user in message.mentions:
         #　ヘルプ
         if "help" in message.content:
-            m = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice <number>d<number> <number>d<number>のダイスを振ります\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n~サイファ用~\n/y fedeck                 オススメデッキ\nこんな感じです'
+            m = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice<number>d<number> <number>d<number>のダイスを振ります\n/y senseki <name1>-<name2> <勝or負>\n                          戦績をシートに登録します(仮)\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n~サイファ用~\n/y fedeck                 オススメデッキ\nこんな感じです'
             await send_channel(m)
         else:
             m = f'{message.author.mention} はいはいー 使い方知りたければhelpでメンションくださーい'
