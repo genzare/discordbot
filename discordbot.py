@@ -105,14 +105,17 @@ async def on_message(message):
             player_1 = info[0]
             player_2 = info[1]
             isVictory = info[2]
+
             if(isVictory=="勝"):
                 wks.update_acell('B2', player_1)
                 wks.update_acell('C2', player_2)
                 m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しました'
+                await send_channel(m)
             if(isVictory=="負"):
                 wks.update_acell('B2', info[1])
                 wks.update_acell('C2', player_1)
                 m = f'{player_2}さんが勝ち、{player_1}さんが負けで登録しましたー'
+                await send_channel(m)
     #--- ふるよに機能 ---
     #メガミ選択
     if message.content.startswith("/y megami"):
