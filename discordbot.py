@@ -101,7 +101,7 @@ async def on_message(message):
     #戦績β
     if message.content.startswith("/y senseki"):
         if client.user != message.author:
-            info = parse('/y senseki {}-{} {}'message.content)
+            info = parse('/y senseki {}-{} {}',message.content)
             player_1 = info[0]
             player_2 = info[1]
             isVictory = info[2]
