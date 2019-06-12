@@ -5,6 +5,26 @@ import numpy as np
 from parse import *
 import os
 
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://spreadsheets.google.com/feeds',
+         'https://www.googleapis.com/auth/drive']
+
+# 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出している
+credential = {
+                "type": "service_account",
+                "project_id": os.environ['SHEET_PROJECT_ID'],
+                "private_key_id": os.environ['SHEET_PRIVATE_KEY_ID'],
+                "private_key": os.environ['SHEET_PRIVATE_KEY'],
+                "client_email": os.environ['SHEET_CLIENT_EMAIL'],
+                "client_id": os.environ['SHEET_CLIENT_ID'],
+                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                "token_uri": "https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                "client_x509_cert_url":  os.environ['SHEET_CLIENT_X509_CERT_URL']
+             }
+
 TOKEN = os.environ.get("DISCORD_TOKEN")
 MEGAMI_LIST =["刀","扇","銃","薙","忍","書","傘","槌","毒","枢","騎","爪","鎌","旗","橇","鏡","古","琵","炎","笛","戦","絆","塵","拒","経","機"]
 FE0SYMBOL_LIST = ["光の剣","聖痕","暗夜","白夜","メダリオン","聖戦旗","神器","シンボルなし"]
@@ -96,6 +116,9 @@ async def on_message(message):
         if client.user != message.author:
             deck_result = random.choice(FE0SYMBOL_LIST)
             m = f'{deck_result}のカードが入ったデッキとかオススメでーす！'
+            credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope)
+            gc = gspread.authorize(credentials)
+            wks = gc.open('隠蔽工作です！').sheet1
             await send_channel(m)
 
     #リプ処理
