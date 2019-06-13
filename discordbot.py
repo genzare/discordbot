@@ -115,6 +115,7 @@ async def on_message(message):
                 wks.update_acell('C2', player_2)
                 m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しましたね'
                 await send_channel(m)
+            wks.update_acell('D2',"未")
     #--- ふるよに機能 ---
     #メガミ選択
     if message.content.startswith("/y megami"):
