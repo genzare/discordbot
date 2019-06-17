@@ -138,7 +138,6 @@ async def on_message(message):
         if client.user != message.author:
             deck_result = random.choice(FE0SYMBOL_LIST)
             m = f'{deck_result}のカードが入ったデッキとかオススメでーす！'
-            print(wks.acell('A1'))
             await send_channel(m)
 
     #リプ処理
