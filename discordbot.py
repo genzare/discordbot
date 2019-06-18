@@ -135,7 +135,7 @@ async def on_message(message):
     #ふるよに個人戦績
     if message.content.startswith("/y fsenseki"):
         if client.user != message.author:
-            info = parse('/y fsenseki {}:{}-{},{}')
+            info = parse('/y fsenseki {}:{}-{} {}',message.content)
             m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
             wks.update_acell('B6',info[0])
             wks.update_acell('C6',info[1])
