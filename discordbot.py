@@ -132,6 +132,17 @@ async def on_message(message):
             else:
                 m = f'現在のメガミの総数は{len(MEGAMI_LIST)}柱です。更新不足ですか・・・？'
                 await send_channel(m)
+    #ふるよに個人戦績
+    if message.content.startswith("/y fsenseki"):
+        if client.user != message.author:
+            info = parse('/y fsenseki {}:{}-{} {}')
+            m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね,\n戦績係に伝えました！'
+            wks.update_acell('B6',info[0])
+            wks.update_acell('C6',info[1])
+            wks.update_acell('D6',info[2])
+            wks.update_acell('E6',info[3])
+            wks.update_acell('F6',"未")
+            await send_channel(m)
     #---サイファ機能----
     #おすすめデッキ
     if message.content == "/y fedeck":
