@@ -11,7 +11,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
-# 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出している
+# 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出しています
 credential = {
                 "type": "service_account",
                 "project_id": os.environ['SHEET_PROJECT_ID'],
@@ -135,14 +135,21 @@ async def on_message(message):
     #ふるよに個人戦績
     if message.content.startswith("/y fsenseki"):
         if client.user != message.author:
-            info = parse('/y fsenseki {}:{}-{} {}',message.content)
-            m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
-            wks.update_acell('B6',info[0])
-            wks.update_acell('C6',info[1])
-            wks.update_acell('D6',info[2])
-            wks.update_acell('E6',info[3])
-            wks.update_acell('F6',"未")
-            await send_channel(m)
+            if message.content.startswith("/y fsenseki -r"):
+                info = parse('/y fsenseki -r {}',message.content)
+                m = f'{info[0]}さんを個人戦績に新規登録ですね、オッケーです！'
+                wks.update_acell('B6',info[0])
+                wks.update_acell('F6',"新")
+                await send_channel(m)
+            else:
+                info = parse('/y fsenseki {}:{}-{} {}',message.content)
+                m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
+                wks.update_acell('B6',info[0])
+                wks.update_acell('C6',info[1])
+                wks.update_acell('D6',info[2])
+                wks.update_acell('E6',info[3])
+                wks.update_acell('F6',"未")
+                await send_channel(m)
     #---サイファ機能----
     #おすすめデッキ
     if message.content == "/y fedeck":
