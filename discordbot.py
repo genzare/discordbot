@@ -107,16 +107,16 @@ async def on_message(message):
             player_2 = info[1]
             isVictory = info[2]
             if(isVictory=="負"):
-                wks.update_acell('B2', info[1])
-                wks.update_acell('C2', player_1)
+                wks.update_acell('B3', info[1])
+                wks.update_acell('C3', player_1)
                 m = f'{player_2}さんが勝ち、{player_1}さんが負けで登録しましたよー'
                 await send_channel(m)
             else:
-                wks.update_acell('B2', player_1)
-                wks.update_acell('C2', player_2)
+                wks.update_acell('B3', player_1)
+                wks.update_acell('C3', player_2)
                 m = f'{player_1}さんが勝ち、{player_2}さんが負けで登録しましたね'
                 await send_channel(m)
-            wks.update_acell('D2',"未")
+            wks.update_acell('D3',"未")
     #--- ふるよに機能 ---
     #メガミ選択
     if message.content.startswith("/y megami"):
@@ -139,18 +139,23 @@ async def on_message(message):
             if message.content.startswith("/y fsenseki -r"):
                 info = parse('/y fsenseki -r {}',message.content)
                 m = f'{info[0]}さんを個人戦績に新規登録ですね、オッケーです！'
-                wks.update_acell('B6',info[0])
-                wks.update_acell('F6',"新")
+                wks.update_acell('B7',info[0])
+                wks.update_acell('F7',"新")
                 await send_channel(m)
             else:
-                info = parse('/y fsenseki {}:{}-{} {}',message.content)
-                m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
-                wks.update_acell('B6',info[0])
-                wks.update_acell('C6',info[1])
-                wks.update_acell('D6',info[2])
-                wks.update_acell('E6',info[3])
-                wks.update_acell('F6',"未")
+                if message.content.startswith("/y fsenseki -info"):
+                m = f'戦績周りの情報です！'
+                wks.update_acell('F3',"ヘルプ")
                 await send_channel(m)
+                else:
+                    info = parse('/y fsenseki {}:{}-{} {}',message.content)
+                    m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
+                    wks.update_acell('B7',info[0])
+                    wks.update_acell('C7',info[1])
+                    wks.update_acell('D7',info[2])
+                    wks.update_acell('E7',info[3])
+                    wks.update_acell('F7',"未")
+                    await send_channel(m)
     #---サイファ機能----
     #おすすめデッキ
     if message.content == "/y fedeck":
@@ -163,7 +168,7 @@ async def on_message(message):
     if client.user in message.mentions:
         #　ヘルプ
         if "help" in message.content:
-            m = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice<number>d<number> <number>d<number>のダイスを振ります\n/y senseki <name1>-<name2> <勝or負>\n                          戦績をシートに登録します(仮)\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n\n~サイファ用~\n/y fedeck                 オススメデッキ\nこんな感じです'
+            m = f'{client.user.name}のことを知りたいのですね\n先行後攻などランダム要素がほしい時にお手伝いさせていただきます。\n\nコマンド一覧：\n@{client.user.name} help  使い方やコマンド一覧を表示します\n/y turn                   先行後攻を決めます\n/y dice                   6面ダイスを振ります\n/y dice<number>d<number> <number>d<number>のダイスを振ります\n/y senseki <name1>-<name2> <勝or負>\n                          戦績をシートに登録します(仮)\n~ふるよに用~\n/y megami                 メガミを一柱選びます\n/y megami<number>         メガミを<number>柱選びます\n/y fsenseki -r <name>     個人戦績シートを作ります\n/y fsenseki -r <name>:<deck1>-<deck2> <勝or負>\n         戦績を登録します(例：gen:刀扇-古戦 負)\n/y fsenseki -info  戦績周りの情報を取得します\n\n~サイファ用~\n/y fedeck                 オススメデッキ\nこんな感じです'
             await send_channel(m)
         else:
             m = f'{message.author.mention} はいはいー 使い方知りたければhelpでメンションくださーい'
