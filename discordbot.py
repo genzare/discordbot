@@ -142,20 +142,19 @@ async def on_message(message):
                 wks.update_acell('B7',info[0])
                 wks.update_acell('F7',"新")
                 await send_channel(m)
-            else:
-                if message.content.startswith("/y fsenseki -info"):
+            elif message.content.startswith("/y fsenseki -info"):
                 m = "戦績周りの情報です！"
                 wks.update_acell('F3',"ヘルプ")
                 await send_channel(m)
-                else:
-                    info = parse('/y fsenseki {}:{}-{} {}',message.content)
-                    m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
-                    wks.update_acell('B7',info[0])
-                    wks.update_acell('C7',info[1])
-                    wks.update_acell('D7',info[2])
-                    wks.update_acell('E7',info[3])
-                    wks.update_acell('F7',"未")
-                    await send_channel(m)
+            else:
+                info = parse('/y fsenseki {}:{}-{} {}',message.content)
+                m=f'{info[0]}さんが{info[1]}を宿して{info[2]}相手に{info[3]}ですね。\n戦績係に伝えました！'
+                wks.update_acell('B7',info[0])
+                wks.update_acell('C7',info[1])
+                wks.update_acell('D7',info[2])
+                wks.update_acell('E7',info[3])
+                wks.update_acell('F7',"未")
+                await send_channel(m)
     #---サイファ機能----
     #おすすめデッキ
     if message.content == "/y fedeck":
