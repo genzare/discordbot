@@ -144,7 +144,7 @@ async def on_message(message):
                 await send_channel(m)
             else:
                 if message.content.startswith("/y fsenseki -info"):
-                m = f'戦績周りの情報です！'
+                m = "戦績周りの情報です！"
                 wks.update_acell('F3',"ヘルプ")
                 await send_channel(m)
                 else:
